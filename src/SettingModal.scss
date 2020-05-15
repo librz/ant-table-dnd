@@ -1,0 +1,12 @@
+.modal-content {
+  .drag-and-drop {
+    display: flex;
+    .left,
+    .right {
+      flex: 1;
+    }
+    .left {
+      margin-right: 100px;
+    }
+  }
+}
