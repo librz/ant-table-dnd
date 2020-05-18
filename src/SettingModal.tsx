@@ -19,7 +19,7 @@ interface SettingModalProps {
 const gap = 8;
 enum Position {
   Left = "left",
-  Right = "right"
+  Right = "right",
 }
 
 const SettingModal: React.FC<SettingModalProps> = ({
@@ -32,21 +32,24 @@ const SettingModal: React.FC<SettingModalProps> = ({
   const [rightColumns, setRightColumns] = useState(columnsToHide);
 
   const handleDragEnd = (result: DropResult) => {
-    console.log({ result });
     if (!result?.destination) return;
 
     const { index: srcIndex, droppableId: srcDroppableId } = result.source;
-    const { index: destIndex, droppableId: destDroppableId } = result.destination;
+    const {
+      index: destIndex,
+      droppableId: destDroppableId,
+    } = result.destination;
 
     if (srcDroppableId === destDroppableId) {
       //vertical drag
-      const resultCols = srcDroppableId === Position.Left ? [...leftColumns] : [...rightColumns];
-      const [removedCol] =resultCols.splice(srcIndex, 1);
+      const resultCols =
+        srcDroppableId === Position.Left ? [...leftColumns] : [...rightColumns];
+      const [removedCol] = resultCols.splice(srcIndex, 1);
       resultCols.splice(destIndex, 0, removedCol);
       if (srcDroppableId === Position.Left) {
-        setLeftColumns(resultCols)
+        setLeftColumns(resultCols);
       } else {
-        setRightColumns(resultCols)
+        setRightColumns(resultCols);
       }
     } else {
       //horizontal drag
@@ -56,15 +59,15 @@ const SettingModal: React.FC<SettingModalProps> = ({
         const [removedCol] = resultLeftCols.splice(srcIndex, 1);
         setLeftColumns(resultLeftCols);
         const resultRightCols = [...rightColumns];
-        resultRightCols.splice(destIndex, 0, removedCol)
-        setRightColumns(resultRightCols)
+        resultRightCols.splice(destIndex, 0, removedCol);
+        setRightColumns(resultRightCols);
       } else {
         //from right to left
         const resultRightCols = [...rightColumns];
         const [removedCol] = resultRightCols.splice(srcIndex, 1);
-        setRightColumns(resultRightCols)
+        setRightColumns(resultRightCols);
         const resultLeftCols = [...leftColumns];
-        resultLeftCols.splice(destIndex, 0, removedCol)
+        resultLeftCols.splice(destIndex, 0, removedCol);
         setLeftColumns(resultLeftCols);
       }
     }
@@ -84,18 +87,20 @@ const SettingModal: React.FC<SettingModalProps> = ({
       <div className="modal-content">
         <div className="drag-and-drop">
           <DragDropContext onDragEnd={handleDragEnd}>
-          {[
-            {
-              position: Position.Left,
-              cols: leftColumns,
-            },
-            {
-              position: Position.Right,
-              cols: rightColumns,
-            },
-          ].map(({ position, cols }) => (
-            <div key={position} className={position}>
-              <h3>Columns to {position === Position.Left ? "show" : "hide"}</h3>
+            {[
+              {
+                position: Position.Left,
+                cols: leftColumns,
+              },
+              {
+                position: Position.Right,
+                cols: rightColumns,
+              },
+            ].map(({ position, cols }) => (
+              <div key={position} className={position}>
+                <h3>
+                  Columns to {position === Position.Left ? "show" : "hide"}
+                </h3>
                 <Droppable droppableId={position}>
                   {(provided, snapshot) => (
                     <div
@@ -139,8 +144,8 @@ const SettingModal: React.FC<SettingModalProps> = ({
                     </div>
                   )}
                 </Droppable>
-            </div>
-          ))}
+              </div>
+            ))}
           </DragDropContext>
         </div>
       </div>
