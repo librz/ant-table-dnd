@@ -1,7 +1,17 @@
 {
-  "name": "flex-table",
+  "name": "ant-table-dnd",
+  "description": "Ant Design Table That Allows User to Hide/Show Columns and change Column Order",
   "version": "0.1.0",
-  "private": true,
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Patrick-Ren/flex-table.git"
+  },
+  "private": false,
+  "author": "rz <rz19960718@gmail.com>",
+  "license": "MIT",
+  "keywords": ["ant design table", "columns"],
+  "homepage": "http://www.patrick-ren.com",
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "@testing-library/jest-dom": "^4.2.4",

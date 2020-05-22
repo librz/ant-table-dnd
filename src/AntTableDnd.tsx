@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { Table } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
-import columns, { TableColumn } from "./Columns";
-import rows from "./Rows";
+import { Table } from "antd";
+import { TableProps } from "antd/lib/table";
 import SettingModal from "./SettingModal";
 
-interface ColumnSetting {
-  columnsToShow: string[];
-  columnsToHide: string[];
-}
-
-const FlexTable = () => {
+const FlexTable : React.FC<TableProps<any>> = ({ columns = [], ...restProps }) => {
   const [showModal, setShowModal] = useState(false);
   const [columnsToShow, setColumnsToShow] = useState(columns);
 
@@ -23,11 +17,8 @@ const FlexTable = () => {
         />
       </div>
       <Table
-        bordered
-        pagination={false}
         columns={columnsToShow}
-        dataSource={rows}
-        rowKey="name"
+        {...restProps}
       />
       {showModal && (
         <SettingModal
@@ -36,7 +27,7 @@ const FlexTable = () => {
             (item) => !columnsToShow.some((ele) => ele.key === item.key)
           )}
           onCancel={() => setShowModal(false)}
-          onOK={(columnsToDisplay: Array<TableColumn>) => {
+          onOK={(columnsToDisplay) => {
             setColumnsToShow(columnsToDisplay);
             setShowModal(false);
           }}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
-import { TableColumn } from "./Columns";
 import {
   DragDropContext,
   Droppable,
@@ -10,10 +9,10 @@ import {
 import "./SettingModal.scss";
 
 interface SettingModalProps {
-  columnsToShow: Array<TableColumn>;
-  columnsToHide: Array<TableColumn>;
+  columnsToShow: any[];
+  columnsToHide: any[];
   onCancel: Function;
-  onOK: (columnsToDisplay: Array<TableColumn>) => void;
+  onOK: (columnsToDisplay: any[]) => void;
 }
 
 const gap = 8;

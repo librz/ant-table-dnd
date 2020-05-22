@@ -1,7 +1,7 @@
-## Table Configruation using react-beautiful-dnd, 2 main features: show/hide columns & change column order
+## 扩展 Ant Design 的 Table 组件，在保留原有功能的情况下支持列的排序和显示、隐藏列
 
-### install dependency: npm install
+1. 安装依赖: yarn install
 
-### start project: npm start
+2. start project: yarn start
 
-### see effect: Click setting button on the top right, drag column horizontally to show/hide columns, vertically to change column order
+3. 点击右上角设置图标，水平拖动列名来显示/隐藏列, 垂直拖动来改变列的排序, 点击 OK 保存设定
