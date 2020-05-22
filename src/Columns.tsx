@@ -1,14 +1,8 @@
-export interface TableColumn {
-  key: string;
-  dataIndex: string;
-  title: string;
-}
-
 const columns = [
   {
     key: "name",
     dataIndex: "name",
-    title: "Name",
+    title: "Name"
   },
   {
     key: "age",
