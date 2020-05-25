@@ -7,6 +7,7 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import arrayMove from "array-move";
 
 const DraggableTable: React.FC<TableProps<any>> = ({
   columns = [],
@@ -14,14 +15,15 @@ const DraggableTable: React.FC<TableProps<any>> = ({
 }) => {
   const [columnsToShow, setColumnsToShow] = useState(() => {
     //转换columns使得每个column都是Droppable和Draggable
-    const cols = JSON.parse(JSON.stringify(columns)) as Array<any>;
-    cols.forEach((ele, index) => {
-      const { title, dataIndex } = ele;
+    const cols = [...columns];
+    cols.forEach((ele) => {
+      const { title, key } = ele;
+      const resultKey = key === undefined ? "" : key.toString();
       ele.title = (
-        <Droppable droppableId={dataIndex}>
+        <Droppable droppableId={resultKey}>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              <Draggable draggableId={dataIndex} index={0}>
+              <Draggable draggableId={resultKey} index={0}>
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
@@ -48,27 +50,36 @@ const DraggableTable: React.FC<TableProps<any>> = ({
     if (!result?.destination) return;
 
     const { droppableId: srcDroppableId } = result.source;
-    const { droppableId: destDroppableId } = result.destination;
+    const {
+      droppableId: destDroppableId,
+      index: destIndex,
+    } = result.destination;
     if (srcDroppableId === destDroppableId) return;
 
-    // 交换列顺序
-    const cols = [...columnsToShow];
-    let srcIndex = NaN;
-    let destIndex = NaN;
-    let srcCol = null;
-    let destCol = null;
-    cols.forEach((ele, index) => {
-        if (ele.dataIndex === srcDroppableId) {
-            srcIndex = index
-            srcCol = {...ele}
-        }
-        else if (ele.dataIndex === destDroppableId) {
-            destIndex = index
-            destCol = {...ele}
-        }
-    })
-    cols.splice(destIndex, 1, srcCol);
-    cols.splice(srcIndex, 1, destCol);
+    console.log({ srcDroppableId, destDroppableId });
+    // 插入操作
+    let cols: any[] = [];
+    let srcColIndex = NaN;
+    let destColIndex = NaN;
+    columnsToShow.forEach((ele, index) => {
+      if (ele.key === srcDroppableId) {
+        srcColIndex = index;
+      } else if (ele.key === destDroppableId) {
+        destColIndex = index;
+      }
+    });
+    if (destIndex > 0) {
+      //插入到dest后面
+      console.log(`insert ${srcColIndex} after ${destColIndex}`);
+      // cols = insertAt(columnsToShow, destColIndex + 1, columnsToShow[srcColIndex]);
+      cols = arrayMove(columnsToShow, srcColIndex, destColIndex + 1);
+    } else {
+      //插入到dest前面
+      console.log(`insert ${srcColIndex} before ${destColIndex}`);
+      // cols = insertAt(columnsToShow, destColIndex, columnsToShow[srcColIndex])
+      cols = arrayMove(columnsToShow, srcColIndex, destColIndex);
+    }
+    console.log({ cols });
     setColumnsToShow(cols);
   };
 

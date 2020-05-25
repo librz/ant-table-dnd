@@ -10,7 +10,10 @@
   "private": false,
   "author": "rz <rz19960718@gmail.com>",
   "license": "MIT",
-  "keywords": ["ant design table", "columns"],
+  "keywords": [
+    "ant design table",
+    "columns"
+  ],
   "homepage": "http://www.patrick-ren.com",
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
@@ -22,6 +25,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "antd": "^4.2.0",
+    "array-move": "^2.2.1",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
