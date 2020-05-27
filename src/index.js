@@ -17,7 +17,7 @@ const App = () => {
         pagination={false}
         rowKey="name"
         style={{
-          width: "50%",
+          width: "80%",
         }}
       />
     </div>

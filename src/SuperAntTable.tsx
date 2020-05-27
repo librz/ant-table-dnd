@@ -18,33 +18,40 @@ function getDndColumns(plainCols: any[]) {
     const { title, dataIndex } = ele;
     ele.title = (
       <Droppable droppableId={dataIndex} direction="horizontal">
-        {(provided, snapshot) => (
+        {(dropProvided, dropSnapshot) => (
           <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
+            {...dropProvided.droppableProps}
+            ref={dropProvided.innerRef}
             style={{
               display: "flex",
-              padding: snapshot.isDraggingOver ? "5px 10px" : 0,
-              border: snapshot.isDraggingOver ? "2px dotted cyan" : "0px",
+              padding: dropSnapshot.isDraggingOver ? "5px 10px" : 0,
+              border: dropSnapshot.isDraggingOver ? "2px dotted cyan" : "0px",
             }}
           >
             <Draggable draggableId={dataIndex} index={0}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  style={{
-                    padding: "5px 10px",
-                    backgroundColor: snapshot.isDragging
-                      ? "lightgreen"
-                      : "inherit",
-                    ...provided.draggableProps.style,
-                  }}
-                >
-                  {title}
-                </div>
-              )}
+              {(dragProvided, dragSnapshot) => {
+                let opacity = 1;
+                if (dropSnapshot.isDraggingOver && !dragSnapshot.draggingOver) {
+                  opacity = 0;
+                }
+                return (
+                  <div
+                    ref={dragProvided.innerRef}
+                    {...dragProvided.draggableProps}
+                    {...dragProvided.dragHandleProps}
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: dragSnapshot.isDragging
+                        ? "lightgreen"
+                        : "inherit",
+                      ...dragProvided.draggableProps.style,
+                      opacity,
+                    }}
+                  >
+                    {title}
+                  </div>
+                );
+              }}
             </Draggable>
           </div>
         )}
@@ -68,10 +75,7 @@ const SuperAntTable: React.FC<TableProps<any>> = ({
     if (!result?.destination) return;
 
     const { droppableId: srcDroppableId } = result.source;
-    const {
-      droppableId: destDroppableId,
-      index: destIndex,
-    } = result.destination;
+    const { droppableId: destDroppableId } = result.destination;
     if (srcDroppableId === destDroppableId) return;
 
     // console.log({ srcDroppableId, destDroppableId });
@@ -88,21 +92,7 @@ const SuperAntTable: React.FC<TableProps<any>> = ({
 
     // console.log({ srcColIndex, destColIndex });
 
-    let cols = columnsToShow;
-    if (srcColIndex < destColIndex) {
-      //destIndex是0说明要插在dest列的前面
-      if (destIndex === 0) {
-        cols = arrayMove(columnsToShow, srcColIndex, destColIndex - 1);
-      } else {
-        cols = arrayMove(columnsToShow, srcColIndex, destColIndex);
-      }
-    } else if (srcColIndex > destColIndex) {
-      if (destIndex === 0) {
-        cols = arrayMove(columnsToShow, srcColIndex, destColIndex);
-      } else {
-        cols = arrayMove(columnsToShow, srcColIndex, destColIndex + 1);
-      }
-    }
+    const cols = arrayMove(columnsToShow, srcColIndex, destColIndex);
     setColumnsToShow(cols);
   };
 
