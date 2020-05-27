@@ -39,6 +39,8 @@ const SettingModal: React.FC<SettingModalProps> = ({
       droppableId: destDroppableId,
     } = result.destination;
 
+    
+
     if (srcDroppableId === destDroppableId) {
       //vertical drag
       const resultCols =

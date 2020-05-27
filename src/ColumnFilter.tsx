@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Menu, Dropdown, Checkbox, Input } from "antd";
 import { DownOutlined, SearchOutlined } from "@ant-design/icons";
 
@@ -11,21 +11,17 @@ interface Props {
 const ColumnFilter: React.FC<Props> = ({
   columns,
   title = "Show/Hide Columns",
-  onCheck
+  onCheck,
 }) => {
   const [checkedColumns, setCheckedColumns] = useState(columns);
   const [menuVisible, setMenuVisible] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState(columns);
   const [searchString, setSearchString] = useState("");
-  const inputRef = useRef<Input>(null);
 
   const handleMenuVisibleChange = (flag: boolean) => {
     setMenuVisible(flag);
     setSearchString("");
     if (flag) {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
       setVisibleColumns(columns);
     }
   };
@@ -33,21 +29,24 @@ const ColumnFilter: React.FC<Props> = ({
   const toggleCheck = (colDataIndex: string) => {
     let result = [];
     if (checkedColumns.some((item) => item.dataIndex === colDataIndex)) {
-        result = 
-        checkedColumns.filter((item) => item.dataIndex !== colDataIndex)
+      result = checkedColumns.filter((item) => item.dataIndex !== colDataIndex);
     } else {
-        result = [
-            ...checkedColumns,
-            columns.find((item) => item.dataIndex === colDataIndex),
-          ]
+      result = [
+        ...checkedColumns,
+        columns.find((item) => item.dataIndex === colDataIndex),
+      ];
     }
-    setCheckedColumns(result)
-    onCheck(result)
+    setCheckedColumns(result);
+    onCheck(result);
   };
 
   const handleSearch = (input: string) => {
     setSearchString(input);
     // console.log({columns})
+    if (!input) {
+      setVisibleColumns(columns);
+      return;
+    }
     const result = columns.filter((col) =>
       col.title.toUpperCase().startsWith(input.toUpperCase())
     );
@@ -63,16 +62,15 @@ const ColumnFilter: React.FC<Props> = ({
         }}
       >
         <Menu.Item key="search-bar">
-              <Input
-                ref={inputRef}
-                value={searchString}
-                onChange={(e) => {
-                  handleSearch(e.target.value);
-                }}
-                
-                style={{width: 200, marginRight:20}}
-              />
-              <SearchOutlined style={{fontSize: 16}} />
+          <Input
+            value={searchString}
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+            allowClear
+            style={{ width: 200, marginRight: 20 }}
+          />
+          <SearchOutlined style={{ fontSize: 16 }} />
         </Menu.Item>
         {visibleColumns.map((ele) => (
           <Menu.Item key={ele.dataIndex}>

@@ -10,13 +10,14 @@ const App = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", padding: 50 }}>
       <SuperAntTable
+        size="small"
         columns={columns}
         dataSource={rows}
         bordered
         pagination={false}
         rowKey="name"
         style={{
-          width: "90%",
+          width: "50%",
         }}
       />
     </div>
