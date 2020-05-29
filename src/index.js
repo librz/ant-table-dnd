@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import columns from "./Columns";
 import rows from "./Rows";
-import SuperAntTable from "./SuperAntTable";
+// import SuperAntTable from "./SuperAntTable";
 import "antd/dist/antd.css";
 // import AntTableDnd from "./AntTableDnd";
+import SuperAntTable from "./SuperAntTable";
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
         size="small"
         columns={columns}
         dataSource={rows}
-        bordered
+        // bordered
         pagination={false}
         rowKey="name"
         style={{

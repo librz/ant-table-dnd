@@ -24,16 +24,11 @@ function getDndColumns(plainCols: any[]) {
             ref={dropProvided.innerRef}
             style={{
               display: "flex",
-              padding: dropSnapshot.isDraggingOver ? "5px 10px" : 0,
-              border: dropSnapshot.isDraggingOver ? "2px dotted cyan" : "0px",
+              width: "100%",
             }}
           >
             <Draggable draggableId={dataIndex} index={0}>
               {(dragProvided, dragSnapshot) => {
-                let opacity = 1;
-                if (dropSnapshot.isDraggingOver && !dragSnapshot.draggingOver) {
-                  opacity = 0;
-                }
                 return (
                   <div
                     ref={dragProvided.innerRef}
@@ -41,11 +36,17 @@ function getDndColumns(plainCols: any[]) {
                     {...dragProvided.dragHandleProps}
                     style={{
                       padding: "5px 10px",
+                      margin: "0 5px",
                       backgroundColor: dragSnapshot.isDragging
                         ? "lightgreen"
                         : "inherit",
+                      border: dragSnapshot.isDragging
+                        ? "2px dotted cyan"
+                        : "0px",
                       ...dragProvided.draggableProps.style,
-                      opacity,
+                      // opacity,
+                      flex: 1,
+                      zIndex: 9,
                     }}
                   >
                     {title}
