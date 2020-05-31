@@ -8,17 +8,21 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import clonedeep from "lodash.clonedeep";
-import arrayMove from "array-move"; //源代码非常简单, 不可变性的实现是浅拷贝, 但如果能保证不修改数组中的元素的话
+import arrayMove from "array-move";
 import ColumnFilter from "./ColumnFilter";
 
-function getDndColumns(plainCols: any[]) {
+function getDndColumns(
+  plainCols: any[],
+  backgroundColor: string = "lightgreen",
+  border: string = "0px"
+) {
   //转换columns使得每个column都是Droppable和Draggable
   const cols = clonedeep(plainCols);
   cols.forEach((ele: any) => {
     const { title, dataIndex } = ele;
     ele.title = (
       <Droppable droppableId={dataIndex} direction="horizontal">
-        {(dropProvided, dropSnapshot) => (
+        {(dropProvided) => (
           <div
             {...dropProvided.droppableProps}
             ref={dropProvided.innerRef}
@@ -35,17 +39,15 @@ function getDndColumns(plainCols: any[]) {
                     {...dragProvided.draggableProps}
                     {...dragProvided.dragHandleProps}
                     style={{
-                      padding: "5px 10px",
-                      margin: "0 5px",
-                      backgroundColor: dragSnapshot.isDragging
-                        ? "lightgreen"
-                        : "inherit",
-                      border: dragSnapshot.isDragging
-                        ? "2px dotted cyan"
-                        : "0px",
                       ...dragProvided.draggableProps.style,
-                      // opacity,
-                      flex: 1,
+                      padding: "5px 15px",
+                      // margin: "0 5px",
+                      backgroundColor: dragSnapshot.isDragging
+                        ? backgroundColor
+                        : "inherit",
+                      border: dragSnapshot.isDragging ? border : "0px",
+                      width: "auto",
+                      // flex: 1,
                       zIndex: 9,
                     }}
                   >
@@ -62,14 +64,26 @@ function getDndColumns(plainCols: any[]) {
   return cols;
 }
 
-const SuperAntTable: React.FC<TableProps<any>> = ({
+interface Props extends TableProps<any> {
+  dragggingStyle?: {
+    border: string;
+    backgroundColor: string;
+  };
+}
+
+const SuperAntTable: React.FC<Props> = ({
   columns = [],
+  dragggingStyle,
   ...restProps
 }) => {
   const originalCols = useMemo(() => clonedeep(columns), [columns]);
 
   const [columnsToShow, setColumnsToShow] = useState(() =>
-    getDndColumns(columns)
+    getDndColumns(
+      columns,
+      dragggingStyle?.backgroundColor,
+      dragggingStyle?.border
+    )
   );
 
   const handleDragEnd = (result: DropResult) => {
@@ -101,7 +115,11 @@ const SuperAntTable: React.FC<TableProps<any>> = ({
     const plainCols = originalCols.filter((item: any) =>
       cols.some((ele) => item.dataIndex === ele.dataIndex)
     );
-    const dndCols = getDndColumns(plainCols);
+    const dndCols = getDndColumns(
+      plainCols,
+      dragggingStyle?.backgroundColor,
+      dragggingStyle?.border
+    );
     setColumnsToShow(dndCols);
   };
 

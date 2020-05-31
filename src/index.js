@@ -14,11 +14,15 @@ const App = () => {
         size="small"
         columns={columns}
         dataSource={rows}
-        // bordered
+        bordered
         pagination={false}
         rowKey="name"
         style={{
           width: "80%",
+        }}
+        dragggingStyle={{
+          backgroundColor: "lightgreen",
+          border: "2px dotted white",
         }}
       />
     </div>
