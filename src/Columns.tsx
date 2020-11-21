@@ -8,33 +8,33 @@ const columns = [
   {
     key: "name",
     dataIndex: "name",
-    title: "Name",
+    title: "姓名",
   },
   {
     key: "age",
     dataIndex: "age",
-    title: "Age",
+    title: "年龄",
   },
   {
     key: "sex",
     dataIndex: "sex",
-    title: "Sex",
+    title: "性别",
     render: (val: any) => (val ? "Male" : "Female"),
   },
   {
     key: "address",
     dataIndex: "address",
-    title: "Address",
+    title: "地址",
   },
   {
     key: "hobby",
     dataIndex: "hobby",
-    title: "Hobbies",
+    title: "爱好",
   },
   {
     key: "phone",
     dataIndex: "phone",
-    title: "Phone Number",
+    title: "电话号码",
   },
 ];
 

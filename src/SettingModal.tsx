@@ -97,9 +97,7 @@ const SettingModal: React.FC<SettingModalProps> = ({
               },
             ].map(({ position, cols }) => (
               <div key={position} className={position}>
-                <h3>
-                  Columns to {position === Position.Left ? "show" : "hide"}
-                </h3>
+                <h3>{position === Position.Left ? "显示" : "隐藏"}列</h3>
                 <Droppable droppableId={position}>
                   {(provided, snapshot) => (
                     <div
