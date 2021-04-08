@@ -14,7 +14,7 @@
     "ant design table",
     "columns"
   ],
-  "homepage": "http://www.patrick-ren.com",
+  "homepage": "http://www.widgets.realrz.com/ant-table-dnd",
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "@testing-library/jest-dom": "^4.2.4",
