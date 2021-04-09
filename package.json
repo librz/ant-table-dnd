@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Patrick-Ren/flex-table.git"
+    "url": "https://github.com/librz/ant-table-dnd.git"
   },
   "private": false,
   "author": "rz <rz19960718@gmail.com>",
