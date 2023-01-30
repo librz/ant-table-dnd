@@ -4,7 +4,9 @@
 
 Powered By react-beautiful-dnd
 
-查看 Demo : http://widgets.realrz.com/ant-table-dnd
+### Demo
+
+[Ant Table Dnd](http://widgets.realrz.com/ant-table-dnd)
 
 #### 如何使用
 
