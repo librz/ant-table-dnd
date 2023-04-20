@@ -4,7 +4,10 @@ import { Table } from "antd";
 import { TableProps } from "antd/lib/table";
 import SettingModal from "./SettingModal";
 
-const FlexTable : React.FC<TableProps<any>> = ({ columns = [], ...restProps }) => {
+const FlexTable: React.FC<TableProps<any>> = ({
+  columns = [],
+  ...restProps
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [columnsToShow, setColumnsToShow] = useState(columns);
 
@@ -16,10 +19,7 @@ const FlexTable : React.FC<TableProps<any>> = ({ columns = [], ...restProps }) =
           onClick={() => setShowModal(true)}
         />
       </div>
-      <Table
-        columns={columnsToShow}
-        {...restProps}
-      />
+      <Table columns={columnsToShow} {...restProps} />
       {showModal && (
         <SettingModal
           columnsToShow={columnsToShow}
