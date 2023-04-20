@@ -2,7 +2,7 @@
 
 以不改变 Ant Deisgn Table 的 API 为前提, 为 Table 组件增加列排序和显示/隐藏列的功能 (Powered By react-beautiful-dnd)
 
-[Demo](http://widgets.realrz.com/ant-table-dnd)
+[Demo](https://ant-table-dnd.vercel.app/)
 
 #### 如何使用
 
